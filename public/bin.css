@@ -1,0 +1,26 @@
+#status {
+              display: flex;
+              width: 100%;
+              height: auto;
+              justify-content: space-between;
+              margin-top: 2vw;
+              margin-bottom: 1vw;
+}
+#status > div {
+              display: flex;
+              flex-flow: column nowrap;
+              /* width: 49%; */
+              height: auto;
+              border-radius: 2vw;
+              align-items: center;
+              justify-content: center;
+              padding: 1vw 2vw;
+              font-weight: bold;
+              font-size: 16pt;
+              outline: 4px solid green;
+              outline-offset: -4px;
+              color: green;
+}
+#status span {
+              font-weight: normal;
+}

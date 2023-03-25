@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang quản lý Hệ thống Thùng rác thông minh</title>
+    <link rel="stylesheet" href="./dashboard.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <script
+      type="module"
+      src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.min.js"
+      integrity="sha512-tQYZBKe34uzoeOjY9jr3MX7R/mo7n25vnqbnrkskGr4D6YOoPYSpyafUAzQVjV6xAozAqUFIEFsCO4z8mnVBXA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <link rel="stylesheet" href="bin.css">
+  </head>
+
+  <body>
+    <header
+      class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow"
+    >
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#"
+        >Trang quản lý Hệ thống Thùng rác thông minh</a
+      >
+      <button
+        class="navbar-toggler position-absolute d-md-none collapsed"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#sidebarMenu"
+        aria-controls="sidebarMenu"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+    <div class="navbar-nav">
+      <div class="nav-item text-nowrap">
+        <a class="nav-link px-3" href="#">Sign out</a>
+      </div>
+    </div> -->
+    </header>
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav
+          id="sidebarMenu"
+          class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
+        >
+          <div class="position-sticky pt-3">
+            <ul class="nav flex-column">
+              <li class="class-item">
+                <a class="nav-link active" aria-current="page" href="#mq135">
+                  <span class="material-symbols-outlined navbar-toggler-icon">
+                    masks
+                  </span>
+                  Chỉ số không khí
+                </a>
+              </li>
+              <li class="class-item">
+                <a class="nav-link active" aria-current="page" href="#mq2">
+                  <span class="material-symbols-outlined navbar-toggler-icon">
+                    airwave
+                  </span>
+                  Chỉ số khí gas
+                </a>
+              </li>
+              <li class="class-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="#googleMap"
+                >
+                  <span class="material-symbols-outlined navbar-toggler-icon">
+                    map
+                  </span>
+                  Bản đồ thùng rác
+                </a>
+              </li>
+              <li class="class-item">
+                <a class="nav-link active" aria-current="page" href="#setting">
+                  <span class="material-symbols-outlined navbar-toggler-icon">
+                    settings
+                  </span>
+                  Cài đặt
+                </a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="main">
+          <div class="chartjs-size-monitor">
+            <div class="chartjs-size-monitor-expand">
+              <div class=""></div>
+            </div>
+            <div class="chartjs-size-monitor-shrink">
+              <div class=""></div>
+            </div>
+          </div>
+          <div id="status">
+            <div id="spray">
+              Phun sương khử mùi: <span id="sprayStatus">Đang hoạt động</span>
+            </div>
+            <div id="lock">
+              Khóa thùng rác: <span id="lockStatus">Đang khoá</span>
+            </div>
+            <div id="full">
+              Thùng rác đầy: <span id="fullStatus">Đang đầy</span>
+            </div>
+          </div>
+          <div id="mq135">
+            <div
+              class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom bg-gradient"
+            >
+              <h1 class="h2" id="mq135Info">
+                Chỉ số trung bình các khí: NH3, NOx, Ancol, Benzen, khói, CO2,…
+              </h1>
+            </div>
+            <canvas
+              class="my-4 w-100 chartjs-render-monitor"
+              id="mq135Chart"
+              width="925"
+              height="390"
+              style="display: block; width: 925px; height: 390px"
+            ></canvas>
+          </div>
+          <div id="mq2">
+            <div
+              class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-sm-start pt-3 pb-2 mb-3 border-bottom flex-column bg-gradient"
+            >
+              <h1 class="h2" id="mq2Info">
+                Chỉ số trung bình các loại khí ga: LPG, Propane và Hydrogen,
+                Metan,...
+              </h1>
+            </div>
+            <canvas
+              class="my-4 w-100 chartjs-render-monitor"
+              id="mq2Chart"
+              width="925"
+              height="390"
+              style="display: block; width: 925px; height: 390px"
+            ></canvas>
+            <!-- <div
+              class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-sm-start pt-3 pb-2 mb-3 border-bottom flex-column"
+            >
+              <h1 class="h2" id="spo2Info">SPO2:</h1>
+            </div>
+            <canvas
+              class="my-4 w-100 chartjs-render-monitor"
+              id="spo2cChart"
+              width="925"
+              height="390"
+              style="display: block; width: 925px; height: 390px"
+            ></canvas> -->
+          </div>
+
+          <!-- <div id="googleMap"></div> -->
+          <div id="map">
+            <div
+              class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-sm-start pt-3 pb-2 mb-3 border-bottom flex-column bg-gradient"
+            >
+              <h1 class="h2" id="mapInfo">
+                Bản đồ hệ thống thùng rác thông minh
+              </h1>
+            </div>
+            <iframe src="https://www.google.com/maps/d/embed?mid=1lGqUREPQ9eW0IsJ_4UZb5e7RaXpfkds&hl=vi&ehbc=2E312F" frameborder="0" style="width: 100%; height: 40vw;"></iframe>
+          </div>
+
+          <div id="setting">
+            <div
+              class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-sm-start pt-3 pb-2 mb-3 border-bottom flex-column bg-gradient"
+            >
+              <h1 class="h2">Cài đặt</h1>
+              <!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-sm-start pt-3 pb-2 mb-3 border-bottom flex-column">
+              <h1 class="h5" id="distanceInfo">Khoảng cách đã di chuyển được: </h1>
+            </div>
+            <div>
+              <h1 class="h4" id="currentPhoneNumber">Số đang nhận: 0369677432</h1>
+            </div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-sm-start pt-3 pb-2 mb-3 border-bottom flex-column">
+              <h1 class="h5">Sửa số Điện Thoại nhận tin nhắn cảnh báo: </h1>
+              <input type="text" id="phone1" name="phone1" placeholder="Nhập số">
+              <button type="button" id="phone1btn" class="btn btn-primary">Sửa</button>
+            </div>
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-sm-start pt-3 pb-2 mb-3 border-bottom flex-column">
+              <h1 class="h5">Thêm số nhận tin nhắn (tối đa 2 số): </h1>
+              <input type="text" id="phone2" name="phone2" placeholder="Nhập số">
+              <button type="button" id="phone2btn" class="btn btn-danger">Thêm</button>
+            </div> -->
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- socketio -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let LAT = 21.019536;
+      let LNG = 105.799487;
+
+      const socket = io();
+
+      const mq135Info = document.getElementById("mq135Info");
+      const mq2Info = document.getElementById("mq2Info");
+      // const spo2Info = document.getElementById("spo2Info");
+      const distanceInfo = document.getElementById("distanceInfo");
+
+      const phone1Input = document.getElementById("phone1");
+      const phone2Input = document.getElementById("phone2");
+      const phone1btn = document.getElementById("phone1btn");
+      const phone2btn = document.getElementById("phone2btn");
+
+      const currentPhoneNumber = document.getElementById("currentPhoneNumber");
+
+      phone1btn.addEventListener("click", () => {
+        let tam = Number(phone1Input.value);
+        if (phone1Input.value == "" || phone1Input.value == null) {
+          alert("Vui lòng nhập số điện thoại");
+          return;
+        } else if (isNaN(tam)) {
+          alert("Vui lòng nhập số điện thoại");
+          return;
+        } else if (phone1Input.value.length != 10) {
+          alert("Vui lòng nhập đúng số điện thoại");
+          return;
+        }
+        socket.emit("phone1", phone1Input.value);
+        currentPhoneNumber.innerHTML = `Số đang nhận: ${phone1Input.value}; ${phone2Input.value}`;
+      });
+      phone2btn.addEventListener("click", () => {
+        let tam = Number(phone2Input.value);
+        if (phone2Input.value == "" || phone2Input.value == null) {
+          alert("Vui lòng nhập số điện thoại");
+          return;
+        } else if (isNaN(tam)) {
+          alert("Vui lòng nhập số điện thoại");
+          return;
+        } else if (phone2Input.value.length != 10) {
+          alert("Vui lòng nhập đúng số điện thoại");
+          return;
+        }
+        socket.emit("phone2", phone2Input.value);
+        currentPhoneNumber.innerHTML = `Số đang nhận: ${phone1Input.value}; ${phone2Input.value}`;
+      });
+
+      socket.on("message", (data) => {
+        console.log(data);
+        mq135Info.innerHTML = `Nhiệt độ: ${data.mq135}°C`;
+        mq2Info.innerHTML = `Nhịp tim: ${data.mq2} bpm`;
+        // spo2Info.innerHTML = `SPO2: ${data.spo2}%`;
+        distanceInfo.innerHTML = `Khoảng cách đã di chuyển được: ${data.distance}cm`;
+        //for map
+        if (
+          data.lng != null &&
+          data.lat != null &&
+          data.lng != 0 &&
+          data.lat != 0
+        ) {
+          LNG = Number(data.lng);
+          LAT = Number(data.lat);
+          updateMarkerPosition(LAT, LNG);
+        }
+
+        setData(mq135Data.datasets[0].data, data.mq135);
+        setData(mq2Data.datasets[0].data, data.mq2);
+        // setData(spo2Data.datasets[0].data, data.spo2);
+        mq135Chart.update();
+        mq2Chart.update();
+        // spo2Chart.update();
+
+        if (data.notify == 1) {
+          alert("Cảnh báo: Bệnh nhân cần được chăm sóc");
+        }
+
+        // myMap();
+      });
+    </script>
+
+    <!-- google map -->
+    <script>
+      let marker;
+      let map;
+
+      function myMap() {
+        const vuphamham = {
+          center: {
+            lat: 21.019536,
+            lng: 105.799487,
+          },
+          zoom: 15,
+        };
+        if (LNG !== 0 || LAT !== 0) {
+          vuphamham.center = {
+            lat: LAT,
+            lng: LNG,
+          };
+        }
+        map = new google.maps.Map(
+          document.getElementById("googleMap"),
+          vuphamham
+          // mapProp2
+        );
+
+        marker = new google.maps.Marker({
+          position: vuphamham.center,
+          map: map,
+        });
+      }
+
+      function updateMarkerPosition(lat, lng) {
+        // Update the position of the marker
+        marker.setPosition({
+          lat: lat,
+          lng: lng,
+        });
+
+        // Update the center of the map to the new position
+        map.panTo({
+          lat: lat,
+          lng: lng,
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBV0leErtS7dmiYz-zuz6xvTbWtzLq3TQ&callback=myMap"></script>
+
+    <!-- chart -->
+    <script>
+      var ctx_mq135 = document.getElementById("mq135Chart").getContext("2d");
+      var ctx_mq2 = document.getElementById("mq2Chart").getContext("2d");
+      // var ctx_spo2 = document.getElementById("spo2cChart").getContext("2d");
+      var mq135Data = {
+        labels: [
+          60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28,
+          26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0,
+        ],
+        datasets: [
+          {
+            label: "Chỉ số khí ppm",
+            data: [1, 0, 31, 10, 50, 200],
+            borderColor: "rgb(75, 192, 192)",
+
+            tension: 0.3,
+          },
+        ],
+      };
+      var mq2Data = {
+        labels: [
+          60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28,
+          26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0,
+        ],
+        datasets: [
+          {
+            label: "Chỉ số khí gas ppm ",
+            data: [
+              1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+              20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+            ],
+            borderColor: "rgb(220, 0, 0)",
+            tension: 0.1,
+          },
+        ],
+      };
+      // var spo2Data = {
+      //   labels: [
+      //     60, 58, 56, 54, 52, 50, 48, 46, 44, 42, 40, 38, 36, 34, 32, 30, 28,
+      //     26, 24, 22, 20, 18, 16, 14, 12, 10, 8, 6, 4, 2, 0,
+      //   ],
+      //   datasets: [
+      //     {
+      //       label: "Nồng độ Oxy (%)",
+      //       data: [
+      //         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+      //         20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
+      //       ],
+      //       borderColor: "rgb(255, 219, 137)",
+      //       tension: 0.1,
+      //     },
+      //   ],
+      // };
+      var mq135Option = {
+        // responsive: false,
+        y: {
+          suggestedMin: 35,
+          suggestedMax: 42,
+        },
+      };
+      var mq2Option = {
+        // responsive: false,
+        y: {
+          suggestedMin: 50,
+          suggestedMax: 120,
+        },
+      };
+      // var spo2Option = {
+      //   // responsive: false,
+      //   y: {
+      //     suggestedMin: 80,
+      //     suggestedMax: 100,
+      //   },
+      // };
+
+      var mq135Chart = new Chart(ctx_mq135, {
+        type: "line",
+        data: mq135Data,
+        options: mq135Option,
+      });
+
+      var mq2Chart = new Chart(ctx_mq2, {
+        type: "line",
+        data: mq2Data,
+        options: mq2Option,
+      });
+
+      // var spo2Chart = new Chart(ctx_spo2, {
+      //   type: "line",
+      //   data: spo2Data,
+      //   options: spo2Option,
+      // });
+
+      function setData(dataset, data) {
+        dataset.push(data);
+        dataset.shift();
+      }
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
