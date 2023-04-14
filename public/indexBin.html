@@ -193,8 +193,8 @@
 
     socket.on("message", (data) => {
       console.log(data);
-      mq135Info.innerHTML = `Nhiệt độ: ${data.MQ135}°C`;
-      mq2Info.innerHTML = `Nhịp tim: ${data.MQ2} bpm`;
+      mq135Info.innerHTML = `Chỉ số trung bình các khí: NH3, NOx, Ancol, Benzen, khói, CO2,…: ${data.MQ135}ppm`;
+      mq2Info.innerHTML = `Chỉ số trung bình các loại khí ga: LPG, Propane và Hydrogen, Metan,...: ${data.MQ2} ppm`;
 
       if (data.phunsuong == 1) {
         sprayStatus.innerHTML = "Đang phun sương";
